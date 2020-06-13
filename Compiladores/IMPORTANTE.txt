@@ -1,3 +1,0 @@
-Buenas noches profesor, este documento es para informarle a que a lo largo de la realización del proyecto iremos modificando los códigos debido a que la organización del equipo es, prácticamente, muy difícil, además de que por mala organización y un planteamiento no estructurado, hemos tenido dificultades en cuanto a escribir códigos congruentes con los códigos de los demás, es decir, que no eran muy compatibles debido a los nombres de las variables y al funcionamiento de las funciones que se realizaron.
-
-Una disculpa por la tardanza de la entrega, nos organizaremos mejor para plantear un proyecto mejor elaborado y sobre todo que cumplan con sus espectativas, gracias.
