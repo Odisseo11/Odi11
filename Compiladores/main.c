@@ -19,7 +19,7 @@
 int main(int argc, char *argv[]){
     pilaTipos *ptt = crearPilaTipos();
     pilaSimbolos *pts = crearPilaSimbolos();
-    insertarTablaTipo(ptt,crearTablaTipo()); //Insertar tabla de tipos y crearla
+    insertarTablaTipo(ptt,crearTablaTipo());
     insertarTablaTipo(ptt,crearTablaTipo());
     printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(1,"int",4,1)));
     printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(2,"int",4,2)));
