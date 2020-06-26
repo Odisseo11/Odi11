@@ -3,24 +3,12 @@
 	#include <stdio.h>
 	#include <string.h>
 	#include <stdlib.h>
-	#include "yacc_p.tab.h"
+	#include "parser.tab.h"
 
 %}
 
 %option noyywrap
 %option yylineno
-
-
-numero [0-9]+
-ent_def [+-]?{numero}
-exp [Ee][+-]?{numero}+
-real_def ({numero}.?{numero}{exp}|{numero}?.{numero}{exp}?|{numero}.{numero}?{exp}?)[Ff]
-dreal_def ({numero}.?{numero}{exp}|{numero}?.{numero}{exp}?|{numero}.{numero}?{exp}?)[dD]
-letra [a-zA-Z]
-id (_|{letra})((_|{letra}|{numero})){0,31}
-
-car_def '([^'])'
-cadena \"([^"]*)\"
 
 registro [Rr][Ee][Gg][Ii][Ss][Tt][Rr][Oo]
 inicio [Ii][Nn][Ii][Cc][Ii][Oo]
@@ -30,19 +18,30 @@ real [Rr][Ee][Aa][Ll]
 dreal [Dd][Rr][Ee][Aa][Ll]
 car [Cc][Aa][Rr]
 sin [Ss][Ii][Nn]
-func [Ff][Uu][Nn][Cc]
+def [Dd][Ee][Ff]
 si [Ss][Ii]
 entonces [Ee][Nn][Tt][Oo][Nn][Cc][Ee][Ss]
 sino [Ss][Ii][Nn][Oo]
 mientras [Mm][Ii][Ee][Nn][Tt][Rr][Aa][Ss]
 hacer [Hh][Aa][Cc][Ee][Rr]
-mientrasq [Mm][Ii][Ee][Nn][Tt][Rr][Aa][Ss]" "[Qq][Uu][Ee]
 escribir [Ee][Ss][Cc][Rr][Ii][Bb][Ii][Rr]
 leer [Ll][Ee][Ee][Rr]
-regresar [Rr][Ee][Gg][Rr][Ee][Ss][Aa][Rr]
+devolver [Dd][Ee][Vv][Oo][Ll][Vv][Ee][Rr]
 terminar [Tt][Ee][Rr][Mm][Ii][Nn][Aa][Rr]
 verdadero [Vv][Ee][Rr][Dd][Aa][Dd][Ee][Rr][Oo]
 falso [Ff][Aa][Ll][Ss][Oo]
+
+digito [0-9]+
+ent_def [+-]?{digito}
+exp [Ee][+-]?{digito}+
+real_def ({digito}.?{digito}{exp}|{digito}?.{digito}{exp}?|{digito}.{digito}?{exp}?)[Ff]
+dreal_def ({digito}.?{digito}{exp}|{digito}?.{digito}{exp}?|{digito}.{digito}?{exp}?)[dD]
+letra [a-zA-Z]
+id (_|{letra})((_|{letra}|{digito})){0,31}
+
+car_def '([^'])'
+cadena \"([^"]*)\"
+
 
 %x com1
 %x com2
@@ -51,97 +50,97 @@ falso [Ff][Aa][Ll][Ss][Oo]
 %%
 
 
+{ent}    { return ENT;}
 
+{dreal} { return DREAL;}
 
-{ent_def}   {yylval.line = yylineno;yylval.num.tipo = 1;yylval.num.ival = atoi(yytext);return NUM;}
+{real} { return REAL;}
 
-{real_def}  {yylval.line = yylineno;yylval.num.tipo = 2;yylval.num.fval = atof(yytext);return NUM;}
+{car} { return CAR;}
 
-{dreal_def} {yylval.line = yylineno; yylval.num.tipo = 3; yylval.num.dval = atof(yytext);return NUM;}
+{sin}   { return SIN;}
 
-{car_def}   {yylval.line = yylineno;yylval.car.tipo = 4;sprintf(yylval.sval,"%c",yytext[1]);return CARACTER;}
+{registro} { return REGISTRO;}
 
-{ent} {yylval.line = yylineno;return ENT;}
+{inicio} { return INICIO;}
 
-{dreal} {yylval.line = yylineno;return DREAL;}
+{def}  { return DEF;}
 
-{real} {yylval.line = yylineno;return REAL;}
+{sino}    { return SINO;}
 
-{car} {yylval.line = yylineno;return CAR;}
+{si}    { return SI;}
 
-{sin}   {yylval.line = yylineno;return SIN;}
+{devolver} { return DEVOLVER;}
 
-{registro} {yylval.line = yylineno;return REGISTRO;}
+{fin}    { return FIN;}
 
-{inicio} {yylval.line = yylineno;return INICIO;}
+{entonces}    { return ENTONCES;}
 
-{func}  {yylval.line = yylineno;return FUNC;}
+{verdadero} { return VERDADERO;}
 
-{sino}    {yylval.line = yylineno;return SINO;}
+{falso} { return FALSO;}
 
-{si}    {yylval.line = yylineno;return SI;}
+{mientras}  { return MIENTRAS;}
 
-{regresar} {yylval.line = yylineno;return REGRESAR;}
+{hacer}  { return HACER;}
 
-{fin}    {yylval.line = yylineno;return FIN;}
+{leer}    { return LEER;}
 
-{entonces}    {yylval.line = yylineno;return ENTONCES;}
+{escribir}    { return ESCRIBIR;}
 
-{verdadero} {yylval.line = yylineno;return VERDADERO;}
+{ent_def}   {yylval.num.tipo = 1;yylval.num.ival = atoi(yytext);return NUM;}
 
-{falso} {yylval.line = yylineno;return FALSO;}
+{real_def}  {yylval.num.tipo = 2;yylval.num.fval = atof(yytext);return NUM;}
 
-{mientras}  {yylval.line = yylineno;return MIENTRAS;}
+{dreal_def} {  yylval.num.tipo = 3; yylval.num.dval = atof(yytext);return NUM;}
 
-{mientrasq}  {yylval.line = yylineno;return MIENTRAS_QUE;}
+"o"    { return O;}
 
-{leer}    {yylval.line = yylineno;return LEER;}
+"y"    { return Y;}
 
-{escribir}    {yylval.line = yylineno;return ESCRIBIR;}
+"no"    { return NO;}
 
-"oo"    {yylval.line = yylineno;return OO;}
+"+"	{ return SUM; }
 
-"yy"    {yylval.line = yylineno;return YY;}
+"-"	{ return RES; }
 
-"no"    {yylval.line = yylineno;return NOT;}
+"*"	{ return MUL; }	
 
-"+"	{ yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return MAS; }
+"/"	{ return DIV; }
 
-"-"	{ yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return MENOS; }
+"%"	{ return MOD; }
 
-"*"	{ yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return PROD; }
+"(" { return LPAR; }
 
-"/"	{ yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return DIV; }
+")" { return RPAR;}
 
-"%"	{ yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return MOD; }
+":="   { return ASIG;}
 
-"(" {yylval.line = yylineno;return LPAR; }
+"," { return COMA;}
 
-")" {yylval.line = yylineno;return RPAR;}
+"[" { return LCOR;}
 
-":="   {yylval.line = yylineno;return ASIG;}
+"]" { return RCOR;}
 
-"," {yylval.line = yylineno;return COMA;}
+";" { return PYC;}
 
-"[" {yylval.line = yylineno;return LCOR;}
+"." { return PT;}
 
-"]" {yylval.line = yylineno;return RCOR;}
+"<"	{   strcpy(yylval.car.sval,yytext); return SMT; }
 
-"." {yylval.line = yylineno;return PT;}
+">"	{   strcpy(yylval.car.sval,yytext); return GRT; }
 
-"<"	{ yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return SMT; }
+">=" {  strcpy(yylval.car.sval,yytext); return GREQ; }
 
-">"	{ yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return GRT; }
+"<=" { strcpy(yylval.car.sval,yytext); return SMEQ; }
 
-">=" { yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return GREQ; }
+"<>" {   strcpy(yylval.car.sval,yytext); return DIF; }
 
-"<=" { yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return SMEQ; }
+"==" {   strcpy(yylval.car.sval,yytext); return EQEQ; }
 
-"<>" { yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return DIF; }
+{id} {  strcpy(yylval.dir ,yytext); return ID;}
 
-"==" { yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext); return EQEQ; }
-
-{id} { yylval.line = yylineno; sprintf(yylval.sval,"%s",yytext);return ID;}
+{car_def}   { yylval.car.tipo = 0; strcpy(yylval.car.sval,yytext); return CARACTER;}
 
 [ \n\t\r]+	{}
 
@@ -149,7 +148,7 @@ falso [Ff][Aa][Ll][Ss][Oo]
 
 "/*"				{ BEGIN(com1); }
 
-<com1>\n    		{ yylval.line = yylineno; }
+<com1>\n    		{   }
 
 <com1>[^*\n]*		{}
 
@@ -166,3 +165,5 @@ falso [Ff][Aa][Ll][Ss][Oo]
 .					{ printf("\n****Error lexico en la linea: %d\n", yylineno);}
 
 %%
+
+
