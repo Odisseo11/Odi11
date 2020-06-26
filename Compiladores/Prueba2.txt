@@ -1,0 +1,15 @@
+ent x,f,h,z;
+dreal a,b,c,d,e,f,g,h;
+car ch,il;
+real pp;
+dreal hola;
+ent [5] a;
+def ent main(ent UNO)
+inicio 
+    x := u;
+    f := 1 + 2;
+    h := (10 + 9 - 8 * 6) / (100 * 20);
+    z := x + f / (h * 10);
+    a := b * (c * 12);
+    d := a + e + f + g + h;
+fin
