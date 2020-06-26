@@ -11,32 +11,6 @@
 	Fecha última versión: 13 de junio de 2020
 */
 
-#include <stdio.h>
-#include "tablaSimbol.h"
-#include "pilaTablaSimbol.h"
-#include "tablaTipo.h"
-#include "pilaTablaTipo.h"
-
-int main(int argc, char *argv[]){
-    pilaTipos *ptt = crearPilaTipos();
-    pilaSimbolos *pts = crearPilaSimbolos();
-    insertarTablaTipo(ptt,crearTablaTipo()); //Insertar tabla de tipos y crearla
-    insertarTablaTipo(ptt,crearTablaTipo());
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(1,"int",4,1)));
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(2,"int",4,2)));
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(3,"float",4,3)));
-    printTablaTipo(getTipoCima(ptt));
-    sacarTablaTipos(ptt);
-    insertarTablaSimbolo(pts, crearTablaSimbolo());
-    insertarTablaSimbolo(pts, crearTablaSimbolo());
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("1",1,0,"int")));
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("2",2,4,"floar")));
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("2",3,8,"array")));
-    printTablaSimbolos(getSimboloCima(pts));
-    sacarTablaTipos(pts);
-    return 0;
-}
-
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
@@ -55,7 +29,7 @@ tipo* crearTipoPrimitivo(int id)
 }
 
 /* Retorna un apuntador a una variable tipo */
-tipo* crearTipoStruct(tablaTipo* estructura) 
+tipo* crearTipoStruct(tablaSimbolo* estructura) 
 {
     tipo* base_type = malloc(sizeof(tipo));
     if(base_type){
@@ -67,11 +41,11 @@ tipo* crearTipoStruct(tablaTipo* estructura)
 }
 
 /* Retorna un apuntador a una variable tipoBase */
-tipoBase* crearATipo(bool is_struct, tipo* tipo_Base) {
-    tipoBase* nuevo = malloc(sizeof(tipoBase));
+tipoBase* crearATipo(bool is_struct, tipo tipo_Base) {
+    tipoBase* nuevo = (tipoBase*)malloc(sizeof(tipoBase)); 
     if(nuevo){
         nuevo->est = is_struct;
-        nuevo->t = *tipo_Base;
+        nuevo->t = tipo_Base;
     }else{
         printf("No hay memoria disponible\n");
     }
@@ -85,7 +59,7 @@ tipo1* crearTipoArray(int id, char* nombre, tipoBase* tb, int size, int num_elem
     if(tipo != NULL){
         tipo->id = id;
         strcpy(tipo->nombre, nombre);
-        tipo->tb = *tb;
+        tipo->tb = tb;
         tipo->tamBytes = size;
         tipo->numElem = num_elem;
         tipo->next = NULL;
@@ -103,7 +77,7 @@ tipo1* crearTipoNativo(int id, char* nombre, tipoBase* tb, int size)
     if(tipo != NULL){
         tipo->id = id;
         strcpy(tipo->nombre, nombre);
-        tipo->tb = *tb;
+        tipo->tb = tb;
         tipo->tamBytes = size;
         tipo->numElem = 0;
         tipo->next = NULL;
@@ -114,17 +88,25 @@ tipo1* crearTipoNativo(int id, char* nombre, tipoBase* tb, int size)
     return tipo;
 }
 
-tipo1* crearTipo(char* nombre, int dim, int tipo, int numElem, bool est, tablaSimbolo* estructura)
-{
-    tipo1* nuevo_type = malloc(sizeof(tipo1));
+tipo1* crearTipo(char* nombre, int dim, int tipon, int numElem, bool est, tablaSimbolo* estructura)
+{ 
+    tipo ft;
+    tipo1* nuevo_type = (tipo1*)malloc(sizeof(tipo1));
     if (nuevo_type) {
         //El id se agrega al momento de insertar a la tabla de tipos 
         strcpy(nuevo_type->nombre, nombre);
-        nuevo_type->tb.t.type = tipo;
-        nuevo_type->tb.est = est;
+        
         if (est == true) {
-            nuevo_type->tb.t.estructura = estructura;
+            ft.estructura = estructura;
+            nuevo_type->tb = crearATipo(est,ft);
         }
+        else
+        {
+            ft.type = tipon; 
+            nuevo_type->tb = crearATipo(est,ft);
+        }
+        
+        
         nuevo_type->numElem = numElem;
         nuevo_type->tamBytes = dim * numElem;
         //El espacio en bytes se agrega al momento de insertar a la tabla de tipos
@@ -141,39 +123,9 @@ tipo1* crearTipo(char* nombre, int dim, int tipo, int numElem, bool est, tablaSi
 tablaTipo* crearTablaTipo()
 {
     tablaTipo* tt= malloc(sizeof(tablaTipo));
-    tipo *tipo_base;
-    tipoBase *arquetipo;
-    tipo *nuevoTipo;
     tt->root=NULL;
     tt->num=0;
     tt->next = NULL;
-    tipo_base = crearTipoPrimitivo(0);
-    arquetipo = crearATipo(false, tipo_base);
-    nuevoTipo = crearTipoNativo(0, "sin", arquetipo, 0);
-    insertarTipo(tt, nuevoTipo);
-    //Crear tipo entero
-    tipo_base = crearTipoPrimitivo(1);
-    arquetipo = crearATipo(false, tipo_base);
-    nuevoTipo = crearTipoNativo(1, "ent", arquetipo, 4);
-    insertarTipo(tt, nuevoTipo);
-
-    //Crear tipo real
-    tipo_base = crearTipoPrimitivo(2);
-    arquetipo = crearATipo(false, tipo_base);
-    nuevoTipo = crearTipoNativo(2, "real", arquetipo, 8);
-    insertarTipo(tt, nuevoTipo);
-
-    //Crear tipo doble
-    tipo_base = crearTipoPrimitivo(3);
-    arquetipo = crearATipo(false, tipo_base);
-    nuevoTipo = crearTipoNativo(3, "dreal", arquetipo, 16);
-    insertarTipo(tt, nuevoTipo);
-
-    //Crear tipo caracter
-    tipo_base = crearTipoPrimitivo(4);
-    arquetipo = crearATipo(false, tipo_base);
-    nuevoTipo = crearTipoNativo(4, "car", arquetipo, 4);
-    insertarTipo(tt, nuevoTipo);
     return tt;
 }
 
@@ -181,13 +133,12 @@ tablaTipo* crearTablaTipo()
 void borrarTablaTipo(tablaTipo* tt) {
     while(tt!=NULL){
         borrarTablaTipo(tt->next);
-        borrarTipo(tt->root);
         free(tt);
     }
 }
-void borrarTipo(tipo1 *t){
+void borrarTipo(tipo1 *t){ 
     while(t!=NULL){
-        borrarType(t->next);
+        borrarTipo(t->next);
         free(t);
     }
     
@@ -210,7 +161,7 @@ int buscarTipo(tablaTipo* tt, char* nombre){
         return -1;  //El simbolo no existe
     }else
         printf("Error: la tabla de tipos no existe\n");
-      return -1;
+        return -1;
 }
 
 /* Inserta al final de la lista en caso de insertar incrementa num
@@ -221,6 +172,7 @@ int insertarTipo(tablaTipo* tt, tipo1* t)
     if(tt){
         int posicion = buscarTipo(tt, t->nombre);
         if(posicion == -1){
+            t->id = tt->num;
             tt->num++;
             if(tt->root == NULL){
                 tt->root = t; //es el primer simbolo
@@ -229,10 +181,10 @@ int insertarTipo(tablaTipo* tt, tipo1* t)
                 tipo1* tipo_actual = tt->root;
                 while(tipo_actual->next != NULL){
                     tipo_actual = tipo_actual->next;
-                }
+                } 
                 tipo_actual->next = t;
             }
-            return (tt->num);
+            return (tt->num-1);
         }
         else{
             printf("No guardar nada\n");
@@ -243,29 +195,29 @@ int insertarTipo(tablaTipo* tt, tipo1* t)
         return -1;
 }
 
- /* Retorna el tipo base de un tipo
+/* Retorna el tipo base de un tipo
   * En caso de no encontrarlo retorna NULL
   */
 tipoBase* getTipoBase(tablaTipo* tt, int id) 
 {
-   if(tt){
+    if(tt){
     if(tt->root){
-       tipo1* aux = tt->root;
-       int i;
-       for(i=0;i<id; i++)
-         aux = aux->next;
-       if(&aux->tb)
-         return &aux->tb;
-     }
-     return NULL;
-   }
-   return NULL;
- }
- /* Retorna el numero de bytes de un tipo
+        tipo1* aux = tt->root;
+        int i;
+        for(i=0;i<id; i++)
+            aux = aux->next;
+            if(aux->tb)
+            return aux->tb;
+    }
+    return NULL;
+    }
+    return NULL;
+}
+/* Retorna el numero de bytes de un tipo
   * En caso de no encontrarlo retorna -1
   */
- int getTamanio(tablaTipo* tt, int id) 
- {
+int getTamanio(tablaTipo* tt, int id) 
+{
     if(tt->root){
         tipo1* aux = tt->root;
         while(aux != NULL){
@@ -276,15 +228,14 @@ tipoBase* getTipoBase(tablaTipo* tt, int id)
         }
         return -1;
     }
- }
+}
 
 
 
- /* Retorna el numero de elementos de un tipo
+/* Retorna el numero de elementos de un tipo
   * En caso de no encontrarlo retorna -1
   */
- int getNumElem(tablaTipo* tt, int id) 
- {
+int getNumElem(tablaTipo* tt, int id)  {
     if(tt){
         if(tt->root){
             tipo1* aux = tt->root;
@@ -297,15 +248,15 @@ tipoBase* getTipoBase(tablaTipo* tt, int id)
         return -1;
     }
     return -1;
- }
+}
 
 /* Imprime toda la tabla de tipos,
  * distingue entre estructuras, arrays y tipos nativos
 */
 char* getNombre(tablaTipo* tt, int id) 
- {
+{
     if(tt){
-     if(tt->root){
+    if(tt->root){
         tipo1* aux = tt->root;
         //Recorre la lista hasta que encuentre el id
         int i;
@@ -313,7 +264,7 @@ char* getNombre(tablaTipo* tt, int id)
             aux = aux->next;
         return aux->nombre;
     }
-   }
+}
     return NULL;
 }
 // Imprime la tabla de tipos
@@ -321,12 +272,28 @@ void printTablaTipo(tablaTipo* tt)
 {
     tipo1* tipo_actual = tt->root;
     tipoBase* tb;
-
-    printf("###TABLA DE TIPOS###\n");
-    printf("ID\tNOMBRE\tNUM_ELEM TAM TIPO_BASE\n");
+    int a;
+    printf("##########TABLA DE TIPOS###########\n");
+    printf("ID\tNOMBRE\t TAM TIPO_BASE\n");
     while(tipo_actual!=NULL){
         int id = tipo_actual->id;
-        printf("%d\t%s\t%d\t%d\t%d\n",id,getNombre(tt,id),getNumElem(tt,id),getTamanio(tt,id),getTipoBase(tt,id)->t.type);
+        if(getTipoBase(tt,id)->est == false)
+        {
+            a = getTipoBase(tt,id)->t.type;
+        }else
+        {   
+            a = -2;
+        }
+        printf("%d\t%s\t%d\t%d\n",id,getNombre(tt,id),getTamanio(tt,id),a);
         tipo_actual = tipo_actual->next;
     }
 }
+
+
+
+
+
+
+
+
+
