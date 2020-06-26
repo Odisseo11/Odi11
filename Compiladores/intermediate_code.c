@@ -36,6 +36,12 @@ QUAD* genQuad(char *op , char *arg1, char *arg2, char *res){
 	return q;
 }
 
+void newTemp(char* dir)
+{
+	sprintf(dir,"t%d",temporalGlobal++);
+}
+
+
 /*Función que va generando las cuadruplas*/
 void gen_Quad(code* c, char *op, char* arg1, char *arg2, char* res){
 	QUAD *q, *q_temp;
@@ -120,55 +126,4 @@ void concat_code(code *c1,code *c2){
 	for(int i = 0; i<c2->instruc; i++){
 		gen_Quad(c1,c2->root[i].op,c2->root[i].arg1,c2->root[i].arg2,c2->root[i].res);
 	}
-}
-/* Funcion encargada de revisar los tipos, si son correctos toma el de
-   mayor rango. 
-   void = 0, int = 1, float = 2, double = 3, char = 4, struct = 5*/
-int max(int t1, int t2){
-
-	if(t1 == t2) return t1;
-	else if (t1 == 1 && t2 == 2) return t1;
-	else if (t1 == 2 && t2 == 1) return t2;
-	else if (t1 == 1 && t2 == 3) return t1;
-	else if (t1 == 3 && t2 == 1) return t2;
-	else if (t1 == 1 && t2 == 4) return t1;
-	else if (t1 == 4 && t1 == 1) return t2;
-	else if (t1 == 3 && t1 == 2) return t1;
-	else if (t1 == 2 && t2 == 3) return t2;
-	return -1; }
-
-char *ampliar(char *dir, int t1, int t2){
-    QUAD c;
-    char *t= (char*) malloc(100*sizeof(char));
-    if( t1==t2) {
-		return dir;}
-    if( t1 ==1 && t2 == 2){
-        c.op = "=";
-        strcpy(c.arg1, "(float)");
-        strcpy(c.arg2, dir);
-        strcpy(t, newTemp());
-        strcpy(c.res, t);
-        gen_Quad(&CODE, c.op,c.arg1,c.arg2,c.res);
-        return t;
-    }        
-    if( t1 ==1 && t2 == 3){
-        c.op = "=";
-        strcpy(c.arg1, "(double)");
-        strcpy(c.arg2, dir);
-        strcpy(t, newTemp());
-        strcpy(c.res, t);
-        gen_Quad(&CODE, c.op,c.arg1,c.arg2,c.res);
-        return t;
-    }        
-    
-    if( t1 ==2 && t2 == 3) {
-        c.op = "=";
-        strcpy(c.arg1, "(double)");
-        strcpy(c.arg2, dir);
-        strcpy(t, newTemp());
-        strcpy(c.res, t);
-        gen_Quad(&CODE, c.op,c.arg1,c.arg2,c.res);
-        return t;
-    }   
-    return NULL;         
 }
