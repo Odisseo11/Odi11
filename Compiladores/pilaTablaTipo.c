@@ -10,31 +10,6 @@
 	Semestre: 2020-1
 	Fecha última versión: 13 de junio de 2020
 */
-#include <stdio.h>
-#include "tablaSimbol.h"
-#include "pilaTablaSimbol.h"
-#include "tablaTipo.h"
-#include "pilaTablaTipo.h"
-
-int main(int argc, char *argv[]){
-    pilaTipos *ptt = crearPilaTipos();
-    pilaSimbolos *pts = crearPilaSimbolos();
-    insertarTablaTipo(ptt,crearTablaTipo()); //Insertar tabla de tipos y crearla
-    insertarTablaTipo(ptt,crearTablaTipo());
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(1,"int",4,1)));
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(2,"int",4,2)));
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(3,"float",4,3)));
-    printTablaTipo(getTipoCima(ptt));
-    sacarTablaTipos(ptt);
-    insertarTablaSimbolo(pts, crearTablaSimbolo());
-    insertarTablaSimbolo(pts, crearTablaSimbolo());
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("1",1,0,"int")));
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("2",2,4,"floar")));
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("2",3,8,"array")));
-    printTablaSimbolos(getSimboloCima(pts));
-    sacarTablaTipos(pts);
-    return 0;
-}
 #include "pilaTablaTipo.h"
 #include "tablaTipo.h"
 #include <stdio.h>
@@ -53,30 +28,29 @@ pilaTipos* crearPilaTipos()
     return nuevaPTT;
 }
 
-void borrarpilaTipos(pilaTipos* pt)
+void borrarpilaTipos(pilaTipos *pt)
 {
     if(pt){
         tablaTipo* aux;
         while(pt->root){
-          aux = pt->root;
-          pt->root = pt->root->next;
-          free(aux);
+        aux = pt->root;
+        pt->root = pt->root->next;
+        free(aux);
         }
         free(pt);
-  }else{
+    }else{
     printf("No existe la pila de tabla de tipos\n");
-  }
+    }
 }
 
 tablaTipo* getTipoCima(pilaTipos* pt)
 {
     tablaTipo *aux = pt->root;
-    pilaTipos *aux_ant;
-    while(aux != NULL){
-        aux_ant = aux;
+    if(aux == NULL){return NULL;}
+    while(aux->next != NULL){
         aux = aux->next;
     }
-    return aux_ant;
+    return aux; 
 }
 
 tablaTipo* getTipoFondo(pilaTipos* pt)
@@ -130,3 +104,7 @@ void printPilaTipos(pilaTipos* pt)
         current = current->next;
     }
 }
+
+
+
+
