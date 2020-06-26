@@ -12,31 +12,6 @@
 */
 
 #include <stdio.h>
-#include "tablaSimbol.h"
-#include "pilaTablaSimbol.h"
-#include "tablaTipo.h"
-#include "pilaTablaTipo.h"
-
-int main(int argc, char *argv[]){
-    pilaTipos *ptt = crearPilaTipos();
-    pilaSimbolos *pts = crearPilaSimbolos();
-    insertarTablaTipo(ptt,crearTablaTipo()); //Insertar tabla de tipos y crearla
-    insertarTablaTipo(ptt,crearTablaTipo());
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(1,"int",4,1)));
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(2,"int",4,2)));
-    printf("%d\n",insertarTipo(getTipoCima(ptt),crearTipoNativo(3,"float",4,3)));
-    printTablaTipo(getTipoCima(ptt));
-    sacarTablaTipos(ptt);
-    insertarTablaSimbolo(pts, crearTablaSimbolo());
-    insertarTablaSimbolo(pts, crearTablaSimbolo());
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("1",1,0,"int")));
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("2",2,4,"floar")));
-    printf("%d\n",insertar(getSimboloCima(pts),crearSimbolo("2",3,8,"array")));
-    printTablaSimbolos(getSimboloCima(pts));
-    sacarTablaTipos(pts);
-    return 0;
-}
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include "tablaSimbol.h"
@@ -344,7 +319,7 @@ void printTablaSimbolos(tablaSimbolo* ts)
     parametro* param_actual;
 
     printf("**********TABLA DE SIMBOLOS**********\n");
-    printf("NUM ID TIPO DIR TipoVar Params\n");
+    printf("NUM\t ID\t TIPO\t DIR\t TipoVar\t Params\n");
     while(simbolos != (ts->num)+1){ 
         char tipoVar_v[100];
         if(getTipoVar(ts, simbolo_actual->id) == NULL){
@@ -352,7 +327,7 @@ void printTablaSimbolos(tablaSimbolo* ts)
         }else{
             strcpy(tipoVar_v,getTipoVar(ts, simbolo_actual->id));
         }
-        printf("%d %s %d %d %s ",simbolos,simbolo_actual->id,getTipo(ts, simbolo_actual->id),getDir(ts, simbolo_actual->id),tipoVar_v);
+        printf("%d\t %s\t %d\t %d\t %s ",simbolos,simbolo_actual->id,getTipo(ts, simbolo_actual->id),getDir(ts, simbolo_actual->id),tipoVar_v);
         lista = getListaParametro(ts, simbolo_actual->id);
         if(lista){
             param_actual = lista->root;
@@ -368,3 +343,7 @@ void printTablaSimbolos(tablaSimbolo* ts)
         simbolos++;
     }
 }
+
+
+
+
