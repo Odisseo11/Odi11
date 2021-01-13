@@ -1,0 +1,177 @@
+# Blender MTL File: 'ProyectoFinalBoceto2.blend'
+# Material Count: 16
+
+newmtl Agua
+Ns 900.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.500000 0.500000 0.500000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+
+newmtl Cantera
+Ns 715.437445
+Ka 1.000000 1.000000 1.000000
+Kd 0.099552 0.125401 0.800000
+Ks 1.000000 1.000000 1.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Marmol.png
+
+newmtl Librero
+Ns 187.879006
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Pared5.psd
+
+newmtl Madera1
+Ns 406.926282
+Ka 0.810345 0.810345 0.810345
+Kd 0.800000 0.357294 0.110203
+Ks 0.172414 0.172414 0.172414
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Madera1.png
+
+newmtl Madera1.001
+Ns 428.061846
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.344828 0.344828 0.344828
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Bigdoor5.jpg
+
+newmtl Pared2IntExt
+Ns 4.280623
+Ka 0.551724 0.551724 0.551724
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Wood5.jpg
+
+newmtl ParedInt2
+Ns 6.688469
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Wood6.jpg
+
+newmtl ParedesInteriores
+Ns 21.670612
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Wood1.jpg
+
+newmtl Pasto
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.036889 0.270498 0.234551
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 3.250000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Pared2.png
+
+newmtl Piedra32
+Ns 225.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.043307 0.043307 0.043307
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Pared1.png
+
+newmtl Rock
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.000000
+d 0.062992
+illum 1
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Pared3.png
+
+newmtl Rock1
+Ns 0.000000
+Ka 0.077586 0.077586 0.077586
+Kd 0.800000 0.800000 0.800000
+Ks 0.068966 0.068966 0.068966
+Ke 0.000000 0.000000 0.000000
+Ni 9.150000
+d 0.413793
+illum 6
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Pared3.png
+
+newmtl SueloArco1
+Ns 0.000000
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.074803 0.074803 0.074803
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 2
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\ParedCocina.png
+
+newmtl SueloCocina
+Ns 763.059938
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.207100 0.207100 0.207100
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 0.968504
+illum 9
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\SueloArcos.png
+
+newmtl Techo
+Ns 119.902506
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.000000 0.000000 0.000000
+Ke 0.000000 0.000000 0.000000
+Ni 0.000000
+d 1.000000
+illum 1
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Zzwolf5.jpg
+
+newmtl TechoArcos
+Ns 24.502489
+Ka 1.000000 1.000000 1.000000
+Kd 0.800000 0.800000 0.800000
+Ks 0.245000 0.245000 0.245000
+Ke 0.000000 0.000000 0.000000
+Ni 1.450000
+d 1.000000
+illum 3
+map_Kd C:\\Users\\Odisseo11\\Music\\Noveno\\Computación Gráfica\\Proyecto\\TexturasPCG\\Flat-step2.jpg
